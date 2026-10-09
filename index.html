@@ -41,6 +41,18 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
  .choices{gap:9px}.choice{min-height:68px}
  .stat{padding:10px 14px}
 }
+
+/* Animasi beruang melompat */
+@keyframes bearJump {
+  0%, 100% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-35px) scale(1.1); }
+  60% { transform: translateY(0) scale(0.95); }
+  80% { transform: translateY(-12px) scale(1.03); }
+}
+.bear-jump {
+  animation: bearJump 0.7s ease;
+}
+
 </style>
 </head>
 <body>
@@ -180,6 +192,10 @@ function mascotSay(message, emoji) {
     mascotSay("Hebat! Kamu memang bijak!", "🐻🎉");
 
     $("feedback").textContent = "Hebat! Betul! 🎉 +10 markah";
+ const bear = document.getElementById("mascot");
+bear.classList.remove("bear-jump");
+void bear.offsetWidth;
+bear.classList.add("bear-jump");
     speakLetter(target);
   } else {
     button.style.background = "#ffd4dd";
