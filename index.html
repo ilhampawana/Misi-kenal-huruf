@@ -1,25 +1,218 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Misi Kenal Huruf!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi Kenal Huruf</title>
 <style>
-:root{--ink:#17365d;--green:#2e9d68;--yellow:#ffe58a;--pink:#ff7e9d;--blue:#79d8f4}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:linear-gradient(#8de5ff,#eafcff 48%,#c8f0b1);min-height:100vh;padding:16px;display:grid;place-items:center}
-.game{width:min(760px,100%);background:#ffffffed;border:5px solid white;border-radius:28px;box-shadow:0 12px 35px #24527b2b;overflow:hidden}.banner{background:linear-gradient(120deg,#42c7ee,#a0edff);padding:20px;text-align:center;position:relative}.banner h1{margin:0;font-size:clamp(1.7rem,5vw,2.7rem);color:#ef4f5e;text-shadow:2px 3px white}.banner p{margin:5px 0 0;font-weight:700}.content{padding:clamp(16px,4vw,28px)}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:16px;font-weight:800}.pill{background:#fff1b9;border-radius:999px;padding:8px 13px}.question{background:#fff0c6;border:2px solid #ffd86b;border-radius:18px;padding:16px;text-align:center;font-size:clamp(1.1rem,3.5vw,1.5rem);font-weight:850}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.choice{background:white;border:3px solid #b8e9fa;border-radius:20px;padding:12px 6px;min-height:125px;font:inherit;font-weight:800;color:var(--ink);cursor:pointer;box-shadow:0 4px 0 #a8d9e8;transition:transform .12s,border-color .12s}.choice:active{transform:translateY(3px);box-shadow:none}.emoji{display:block;font-size:clamp(2.2rem,8vw,4rem);margin-bottom:5px}.choice.correct{border-color:#42b978;background:#e4ffed}.choice.wrong{border-color:#ff8290;background:#fff0f1}.feedback{min-height:50px;text-align:center;font-size:1.15rem;font-weight:850;padding:8px}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.mainbtn{border:0;border-radius:999px;background:#635bdf;color:white;font-size:1rem;font-weight:850;padding:13px 22px;cursor:pointer;box-shadow:0 4px 0 #4239a7}.mainbtn:disabled{opacity:.45;cursor:default}.hidden{display:none}.start{text-align:center;padding:10px 0}.start .hero{font-size:5rem}.start p{font-size:1.1rem;line-height:1.5}.small{font-size:.86rem;color:#48647e;text-align:center;margin-top:18px}.stars{color:#e8a600;font-size:1.25rem}@media(max-width:430px){body{padding:8px}.choices{gap:7px}.choice{min-height:110px;font-size:.9rem}.content{padding:14px}.banner{padding:17px 10px}}
-</style></head>
-<body><main class="game" aria-live="polite"><header class="banner"><h1>🌟 Misi Kenal Huruf! 🌟</h1><p>Jom belajar sambil bermain</p></header><section class="content" id="start"><div class="start"><div class="hero">🦁 🔤 🐥</div><h2>Hai, kawan kecil!</h2><p>Bantu kita kenal huruf A, B dan C.<br>Pilih gambar yang betul dan kumpul bintang!</p><button class="mainbtn" id="startBtn">MULA BERMAIN ▶</button></div></section><section class="content hidden" id="play"><div class="top"><span class="pill" id="round">Soalan 1 daripada 3</span><span class="pill">⭐ <span id="score">0</span>/3</span></div><div class="question" id="question"></div><div class="choices" id="choices"></div><div class="feedback" id="feedback" role="status"></div><div class="actions"><button class="mainbtn hidden" id="nextBtn">Seterusnya ➜</button></div><p class="small">Dibuat untuk latihan awal kanak-kanak · Versi demo percuma</p></section><section class="content hidden" id="end"><div class="start"><div class="hero">🏆</div><h2>Hebat sekali!</h2><p id="result"></p><button class="mainbtn" id="againBtn">Main lagi ↻</button></div></section></main>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#fff1b8,#ffd6e7,#d8f4ff);
+  color:#30345b;text-align:center;min-height:100vh;
+  padding:16px;
+}
+.container{max-width:650px;margin:auto}
+header{padding:10px}
+h1{font-size:clamp(27px,6vw,42px);margin:8px 0;color:#7546bb}
+.subtitle{font-size:17px}
+.stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:15px 0}
+.stat{background:white;border-radius:18px;padding:12px 20px;font-weight:bold;box-shadow:0 4px 0 #e4d8f7}
+.card{background:#ffffffed;border-radius:25px;padding:22px 16px;box-shadow:0 8px 25px #7861a126}
+.instruction{font-size:19px;font-weight:bold}
+.big-letter{font-size:clamp(90px,25vw,140px);font-weight:900;color:#ff6495;margin:8px}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px auto;max-width:430px}
+button{font-family:inherit;cursor:pointer;touch-action:manipulation}
+.choice{border:0;border-radius:18px;background:#e7e0ff;color:#553a96;font-size:clamp(30px,8vw,42px);font-weight:bold;min-height:78px;box-shadow:0 5px 0 #c9b9ef}
+.choice:active{transform:translateY(3px);box-shadow:0 2px 0 #c9b9ef}
+.choice:disabled{cursor:default;opacity:.9}
+.main-btn{border:0;border-radius:25px;padding:13px 20px;margin:5px;font-size:16px;font-weight:bold;background:#6bcbaf;color:#173f36}
+.sound-btn{background:#d9efff;color:#245b85}
+.reset-btn{background:#ffe2a6;color:#79500b}
+.feedback{min-height:34px;font-size:19px;font-weight:bold;margin:12px 0}
+.progress-wrap{height:12px;background:#eee5ff;border-radius:20px;overflow:hidden;margin:18px 0 8px}
+.progress{height:100%;width:0;background:#7cceaa;transition:width .3s}
+.small{font-size:14px;color:#696781;line-height:1.5}
+footer{padding:20px 5px}
+button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
+@media(max-width:380px){
+ body{padding:9px}.card{padding:16px 10px}
+ .choices{gap:9px}.choice{min-height:68px}
+ .stat{padding:10px 14px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div style="font-size:42px" aria-hidden="true">🦋 🌈 🐻</div>
+  <h1>🎈 Misi Kenal Huruf 🎈</h1>
+  <div class="subtitle">Jom belajar ABC sambil bermain!</div>
+</header>
+
+<div class="stats">
+  <div class="stat">⭐ Markah: <span id="score">0</span></div>
+  <div class="stat">🌟 Bintang: <span id="stars">0</span></div>
+  <div class="stat">🎯 Soalan: <span id="round">1</span>/10</div>
+</div>
+
+<main class="card">
+  <div class="instruction" id="instruction">Cari huruf yang betul!</div>
+  <div class="big-letter" id="target">A</div>
+  <button class="main-btn sound-btn" id="hearBtn">🔊 Dengar huruf</button>
+
+  <div class="choices" id="choices">
+    <button class="choice">A</button>
+    <button class="choice">B</button>
+    <button class="choice">C</button>
+  </div>
+
+  <div class="feedback" id="feedback" aria-live="polite">Pilih jawapan kamu 😊</div>
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  <div class="small">Jawapan betul mendapat 10 markah dan 1 bintang!</div>
+  <div style="margin-top:15px">
+    <button class="main-btn" id="nextBtn" hidden>Soalan seterusnya ➜</button>
+    <button class="main-btn reset-btn" id="restartBtn">🔄 Main semula</button>
+  </div>
+</main>
+
+<footer class="small">
+  💖 Terus mencuba! Setiap huruf membawa kita kepada ilmu baharu.
+</footer>
+</div>
+
 <script>
-const qs=[
- {letter:'A',prompt:'Mana satu bermula dengan huruf A?',answers:[{name:'Ayam',emoji:'🐔',ok:true},{name:'Bola',emoji:'⚽',ok:false},{name:'Epal',emoji:'🍎',ok:false}]},
- {letter:'B',prompt:'Mana satu bermula dengan huruf B?',answers:[{name:'Kucing',emoji:'🐱',ok:false},{name:'Bola',emoji:'⚽',ok:true},{name:'Ayam',emoji:'🐔',ok:false}]},
- {letter:'C',prompt:'Mana satu bermula dengan huruf C?',answers:[{name:'Epal',emoji:'🍎',ok:false},{name:'Bola',emoji:'⚽',ok:false},{name:'Cawan',emoji:'☕',ok:true}]}
-];
-let index=0,score=0,answered=false;
-const $=id=>document.getElementById(id);function show(id){['start','play','end'].forEach(s=>$(s).classList.toggle('hidden',s!==id))}
-function start(){index=0;score=0;render();show('play')}
-function render(){answered=false;const q=qs[index];$('round').textContent=`Soalan ${index+1} daripada ${qs.length}`;$('score').textContent=score;$('question').textContent=`Huruf ${q.letter}: ${q.prompt}`;$('feedback').textContent='Pilih satu jawapan!';$('nextBtn').classList.add('hidden');$('choices').innerHTML='';q.answers.forEach(a=>{const b=document.createElement('button');b.className='choice';b.innerHTML=`<span class="emoji">${a.emoji}</span>${a.name}`;b.onclick=()=>answer(b,a.ok);$('choices').appendChild(b)})}
-function answer(btn,ok){if(answered)return;answered=true;document.querySelectorAll('.choice').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(ok){score++;$('feedback').textContent='🌟 Bagus! Jawapan betul!';}else{$('feedback').textContent='💛 Cuba lagi lain kali! Jawapan yang betul ditandakan hijau.';const q=qs[index];[...document.querySelectorAll('.choice')].forEach((b,i)=>{if(q.answers[i].ok)b.classList.add('correct')})}$('score').textContent=score;$('nextBtn').textContent=index===qs.length-1?'Lihat keputusan 🏆':'Seterusnya ➜';$('nextBtn').classList.remove('hidden')}
-$('startBtn').onclick=start;$('nextBtn').onclick=()=>{if(index<qs.length-1){index++;render()}else{show('end');$('result').textContent=`Adik dapat ${score} daripada ${qs.length} bintang. ${score===3?'Memang hebat!':'Terus berlatih, adik pasti boleh!'}`}};$('againBtn').onclick=start;
-</script></body></html>
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const $ = id => document.getElementById(id);
+
+let score = 0;
+let stars = 0;
+let round = 1;
+let target = "A";
+let answered = false;
+let finished = false;
+let used = [];
+
+function shuffle(items) {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function speakLetter(letter) {
+  if (!("speechSynthesis" in window)) {
+    $("feedback").textContent =
+      "Maaf, suara tidak disokong pada pelayar ini.";
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const speech = new SpeechSynthesisUtterance(letter);
+  speech.lang = "ms-MY";
+  speech.rate = 0.75;
+  window.speechSynthesis.speak(speech);
+}
+
+function updateStats() {
+  $("score").textContent = score;
+  $("stars").textContent = stars;
+  $("round").textContent = Math.min(round, 10);
+  $("progress").style.width = ((round - 1) / 10 * 100) + "%";
+}
+
+function newQuestion() {
+  answered = false;
+  $("feedback").textContent = "Pilih jawapan kamu 😊";
+  $("nextBtn").hidden = true;
+  $("hearBtn").disabled = false;
+  $("instruction").textContent = "Cari huruf yang betul!";
+  $("target").textContent = "?";
+
+  if (used.length === 0) used = shuffle(alphabet);
+  target = used.pop();
+  $("target").textContent = target;
+
+  let options = [target];
+  while (options.length < 3) {
+    const letter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    if (!options.includes(letter)) options.push(letter);
+  }
+
+  $("choices").replaceChildren();
+  shuffle(options).forEach(letter => {
+    const button = document.createElement("button");
+    button.className = "choice";
+    button.textContent = letter;
+    button.setAttribute("aria-label", "Pilih huruf " + letter);
+    button.addEventListener("click", () => checkAnswer(letter, button));
+    $("choices").appendChild(button);
+  });
+  updateStats();
+}
+
+function checkAnswer(letter, button) {
+  if (answered || finished) return;
+  answered = true;
+
+  document.querySelectorAll(".choice").forEach(b => b.disabled = true);
+
+  if (letter === target) {
+    score += 10;
+    stars += 1;
+    button.style.background = "#baf2d7";
+    button.style.color = "#185c42";
+    $("feedback").textContent = "Hebat! Betul! 🎉 +10 markah";
+    speakLetter(target);
+  } else {
+    button.style.background = "#ffd4dd";
+    button.style.color = "#8d2948";
+    $("feedback").textContent = "Bagus mencuba! Jawapan ialah " + target + ". 💪";
+  }
+
+  $("hearBtn").disabled = false;
+  $("nextBtn").hidden = false;
+  $("nextBtn").textContent = round === 10 ? "Lihat keputusan 🏆" : "Soalan seterusnya ➜";
+  $("progress").style.width = (round / 10 * 100) + "%";
+  updateStats();
+}
+
+function nextQuestion() {
+  if (!answered || finished) return;
+
+  if (round >= 10) {
+    finished = true;
+    $("instruction").textContent = "Misi selesai!";
+    $("target").textContent = "🏆";
+    $("choices").replaceChildren();
+    $("feedback").textContent =
+      "Tahniah! Markah kamu " + score + "/100 dan " + stars + " bintang! 🌟";
+    $("hearBtn").disabled = true;
+    $("nextBtn").hidden = true;
+    $("progress").style.width = "100%";
+    return;
+  }
+
+  round++;
+  newQuestion();
+}
+
+function restartGame() {
+  score = 0;
+  stars = 0;
+  round = 1;
+  finished = false;
+  used = shuffle(alphabet);
+  newQuestion();
+}
+
+$("hearBtn").addEventListener("click", () => speakLetter(target));
+$("nextBtn").addEventListener("click", nextQuestion);
+$("restartBtn").addEventListener("click", restartGame);
+
+restartGame();
+</script>
+</body>
+</html>
