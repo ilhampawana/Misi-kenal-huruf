@@ -147,6 +147,7 @@ Hai kawan! Jom belajar huruf! 🌈
   <div class="small">Jawapan betul mendapat 10 markah dan 1 bintang!</div>
   <div style="margin-top:15px">
     <button class="main-btn" id="nextBtn" hidden>Soalan seterusnya ➜</button>
+    <button class="main-btn" id="restartBtn" hidden onclick="location.reload()">🔄 Main Semula</button>
     <button class="main-btn reset-btn" id="restartBtn">🔄 Main semula</button>
   </div>
 </main>
@@ -296,6 +297,7 @@ function nextQuestion() {
 
     $("hearBtn").disabled = true;
     $("nextBtn").hidden = true;
+    $("restartBtn").hidden = false;
     $("progress").style.width = "100%";
     return;
   }
