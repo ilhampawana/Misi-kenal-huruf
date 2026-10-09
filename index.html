@@ -244,7 +244,7 @@ function playSound(correct) {
   oscillator.connect(gain);
   gain.connect(audio.destination);
   oscillator.type = "sine";
-  oscillator.frequency.value = correct ? 880 : 220;
+  oscillator.frequency.value = correct ? 880 : 330;
 
   gain.gain.setValueAtTime(0.12, audio.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.2);
