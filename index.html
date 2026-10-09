@@ -58,6 +58,12 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
 </div>
 
 <main class="card">
+  
+<div id="mascot" style="font-size:70px;margin:10px auto;">🐻</div>
+<div id="mascotMessage" style="background:#fff0b8;border-radius:18px;padding:12px;margin:10px auto;font-size:18px;font-weight:bold;">
+Hai kawan! Jom belajar huruf! 🌈
+</div>
+
   <div class="instruction" id="instruction">Cari huruf yang betul!</div>
   <div class="big-letter" id="target">A</div>
   <button class="main-btn sound-btn" id="hearBtn">🔊 Dengar huruf</button>
@@ -153,7 +159,13 @@ function newQuestion() {
   updateStats();
 }
 
-function checkAnswer(letter, button) {
+
+function mascotSay(message, emoji) {
+  document.getElementById("mascot").textContent = emoji;
+  document.getElementById("mascotMessage").textContent = message;
+}
+
+  function checkAnswer(letter, button) {
   if (answered || finished) return;
   answered = true;
 
@@ -164,6 +176,9 @@ function checkAnswer(letter, button) {
     stars += 1;
     button.style.background = "#baf2d7";
     button.style.color = "#185c42";
+    
+    mascotSay("Hebat! Kamu memang bijak!", "🐻🎉");
+
     $("feedback").textContent = "Hebat! Betul! 🎉 +10 markah";
     speakLetter(target);
   } else {
@@ -171,6 +186,8 @@ function checkAnswer(letter, button) {
     button.style.color = "#8d2948";
     $("feedback").textContent = "Bagus mencuba! Jawapan ialah " + target + ". 💪";
   }
+
+    mascotSay("Tak mengapa, cuba lagi!", "🐻💪");
 
   $("hearBtn").disabled = false;
   $("nextBtn").hidden = false;
@@ -185,6 +202,9 @@ function nextQuestion() {
   if (round >= 10) {
     finished = true;
     $("instruction").textContent = "Misi selesai!";
+    
+    mascotSay("Tahniah! Kamu juara! Hebat sekali!", "🐻🏆");
+
     $("target").textContent = "🏆";
     $("choices").replaceChildren();
     $("feedback").textContent =
