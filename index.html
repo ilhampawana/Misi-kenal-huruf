@@ -53,6 +53,27 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
   animation: bearJump 0.7s ease;
 }
 
+/* Animasi ganjaran bintang */
+@keyframes starReward {
+  0% {
+    transform: scale(0.3) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.4) rotate(15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.star-reward {
+  display: inline-block;
+  animation: starReward 0.7s ease-out;
+}
+
 </style>
 </head>
 <body>
@@ -75,6 +96,8 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
 <div id="mascotMessage" style="background:#fff0b8;border-radius:18px;padding:12px;margin:10px auto;font-size:18px;font-weight:bold;">
 Hai kawan! Jom belajar huruf! 🌈
 </div>
+
+<div id="starReward" style="font-size:36px;min-height:44px;margin:8px auto;"></div>
 
   <div class="instruction" id="instruction">Cari huruf yang betul!</div>
   <div class="big-letter" id="target">A</div>
@@ -196,6 +219,10 @@ function mascotSay(message, emoji) {
 bear.classList.remove("bear-jump");
 void bear.offsetWidth;
 bear.classList.add("bear-jump");
+  
+const reward = document.getElementById("starReward");
+reward.innerHTML = '<span class="star-reward">⭐</span>';
+  
     speakLetter(target);
    } else {
     button.style.background = "#ffd4dd";
