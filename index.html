@@ -231,20 +231,32 @@ function newQuestion() {
   $("feedback").textContent = "Pilih jawapan kamu 😊";
   $("nextBtn").hidden = true;
   $("hearBtn").disabled = false;
-  $("instruction").textContent = "Cari huruf yang betul!";
   $("target").textContent = "?";
 
+  if (currentMission === 1) {
+    $("instruction").textContent = "🌱 Dengar dan pilih huruf yang betul!";
+  } else if (currentMission === 2) {
+    $("instruction").textContent = "🌈 Cari huruf sasaran antara 4 pilihan!";
+  } else {
+    $("instruction").textContent = "🏆 Cabaran! Pilih huruf yang betul antara 6 pilihan!";
+  }
+
   if (used.length === 0) used = shuffle(alphabet);
+
   target = used.pop();
   $("target").textContent = target;
 
   let options = [target];
-  while (options.length < 3) {
+  const jumlahPilihan = currentMission === 1 ? 3 :
+                        currentMission === 2 ? 4 : 6;
+
+  while (options.length < jumlahPilihan) {
     const letter = alphabet[Math.floor(Math.random() * alphabet.length)];
     if (!options.includes(letter)) options.push(letter);
   }
 
   $("choices").replaceChildren();
+
   shuffle(options).forEach(letter => {
     const button = document.createElement("button");
     button.className = "choice";
@@ -253,9 +265,9 @@ function newQuestion() {
     button.addEventListener("click", () => checkAnswer(letter, button));
     $("choices").appendChild(button);
   });
+
   updateStats();
 }
-
 
 function mascotSay(message, emoji) {
   document.getElementById("mascot").textContent = emoji;
