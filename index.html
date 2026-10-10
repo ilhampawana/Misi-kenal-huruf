@@ -178,7 +178,7 @@ let finished = false;
 let used = [];
 
 let currentMission = 1;
-let unlockedMission = 1;
+let unlockedMission = Number(localStorage.getItem("misiKenalHurufUnlocked") || 1);
 
 function shuffle(items) {
   const a = [...items];
@@ -356,7 +356,7 @@ function nextQuestion() {
       unlockedMission,
       Math.min(3, currentMission + 1)
     );
-
+     localStorage.setItem("misiKenalHurufUnlocked", unlockedMission);
     if (unlockedMission >= 2) {
       $("mission2Btn").disabled = false;
       $("mission2Btn").textContent = "🌈 Misi 2 — Cari Huruf";
@@ -410,6 +410,23 @@ function restartGame() {
   used = shuffle(alphabet);
   newQuestion();
 }
+
+function refreshMissionMenu() {
+  if (unlockedMission >= 2) {
+    $("mission2Btn").disabled = false;
+    $("mission2Btn").textContent = "🌈 Misi 2 — Cari Huruf";
+    $("mission2Btn").setAttribute("onclick", "selectMission(2)");
+  }
+
+  if (unlockedMission >= 3) {
+    $("mission3Btn").disabled = false;
+    $("mission3Btn").textContent = "🏆 Misi 3 — Cabaran Huruf";
+    $("mission3Btn").setAttribute("onclick", "selectMission(3)");
+  }
+}
+
+refreshMissionMenu();
+
 
 $("hearBtn").addEventListener("click", () => speakLetter(target));
 $("nextBtn").addEventListener("click", nextQuestion);
