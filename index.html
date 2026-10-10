@@ -233,36 +233,48 @@ function mascotSay(message, emoji) {
   document.getElementById("mascot").textContent = emoji;
   document.getElementById("mascotMessage").textContent = message;
 }
+
+let gameAudio = null;
+
 async function playSound(correct) {
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  const AudioContextClass =
+    window.AudioContext || window.webkitAudioContext;
+
   if (!AudioContextClass) return;
 
-  const audio = new AudioContextClass();
+  try {
+    if (!gameAudio || gameAudio.state === "closed") {
+      gameAudio = new AudioContextClass();
+    }
 
-  if (audio.state === "suspended") {
-    await audio.resume();
+    if (gameAudio.state === "suspended") {
+      await gameAudio.resume();
+    }
+
+    const oscillator = gameAudio.createOscillator();
+    const gain = gameAudio.createGain();
+
+    oscillator.connect(gain);
+    gain.connect(gameAudio.destination);
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = correct ? 880 : 220;
+
+    const now = gameAudio.currentTime;
+
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      now + 0.3
+    );
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.3);
+  } catch (error) {
+    console.error("Ralat bunyi:", error);
   }
-
-  const oscillator = audio.createOscillator();
-  const gain = audio.createGain();
-
-  oscillator.connect(gain);
-  gain.connect(audio.destination);
-
-  oscillator.type = "sine";
-  oscillator.frequency.value = correct ? 880 : 220;
-
-  gain.gain.setValueAtTime(0.12, audio.currentTime);
-  gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audio.currentTime + 0.3
-  );
-
-  oscillator.start();
-  oscillator.stop(audio.currentTime + 0.3);
-
-  oscillator.onended = () => audio.close();
 }
+
   function checkAnswer(letter, button) {
   if (answered || finished) return;
   answered = true;
