@@ -173,6 +173,7 @@ let score = 0;
 let stars = 0;
 let round = 1;
 let target = "A";
+let correctAnswer = "A";
 let answered = false;
 let finished = false;
 let used = [];
@@ -243,8 +244,18 @@ function newQuestion() {
 
   if (used.length === 0) used = shuffle(alphabet);
 
-  target = used.pop();
-  $("target").textContent = target;
+ target = used.pop();
+
+let answer = target;
+
+if (currentMission === 3) {
+  const index = alphabet.indexOf(target);
+  answer = alphabet[(index + 1) % alphabet.length];
+  $("instruction").textContent =
+    "🏆 Huruf selepas " + target + " ialah huruf apa?";
+}
+
+$("target").textContent = target; 
 
   let options = [target];
   const jumlahPilihan = currentMission === 1 ? 3 :
