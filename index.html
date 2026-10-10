@@ -117,6 +117,14 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
   <div class="subtitle">Jom belajar ABC sambil bermain!</div>
 </header>
 
+<div id="missionMenu" style="background:#fff0b8;border-radius:18px;padding:14px;margin:12px auto;text-align:center;">
+  <h2>🌈 Pilih Misi</h2>
+  <button class="main-btn" onclick="selectMission(1)">🌱 Misi 1 — Kenal Huruf</button>
+  <button class="main-btn" id="mission2Btn" disabled>🌈 Misi 2 — Cari Huruf 🔒</button>
+  <button class="main-btn" id="mission3Btn" disabled>🏆 Misi 3 — Cabaran Huruf 🔒</button>
+  <div id="missionMessage">Selesaikan misi untuk membuka tahap seterusnya! ⭐</div>
+</div>
+
 <div class="stats">
   <div class="stat">⭐ Markah: <span id="score">0</span></div>
   <div class="stat">🌟 Bintang: <span id="stars">0</span></div>
@@ -169,6 +177,9 @@ let answered = false;
 let finished = false;
 let used = [];
 
+let currentMission = 1;
+let unlockedMission = 1;
+
 function shuffle(items) {
   const a = [...items];
   for (let i = a.length - 1; i > 0; i--) {
@@ -176,6 +187,23 @@ function shuffle(items) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+function selectMission(mission) {
+  if (mission > unlockedMission) return;
+
+  currentMission = mission;
+  restartGame();
+
+  $("missionMessage").textContent =
+    mission === 1 ? "🌱 Misi 1 — Kenal Huruf! Jom mula!" :
+    mission === 2 ? "🌈 Misi 2 — Cari Huruf! Teruskan!" :
+    "🏆 Misi 3 — Cabaran Huruf! Semoga berjaya!";
+    
+  $("instruction").textContent =
+    mission === 1 ? "Kenali dan cari huruf yang betul!" :
+    mission === 2 ? "Cari huruf sasaran dengan teliti!" :
+    "Bersedia untuk cabaran huruf!";
 }
 
 function speakLetter(letter) {
@@ -323,6 +351,29 @@ function nextQuestion() {
   if (round >= 10) {
     finished = true;
     $("instruction").textContent = "Misi selesai!";
+
+    unlockedMission = Math.max(
+      unlockedMission,
+      Math.min(3, currentMission + 1)
+    );
+
+    if (unlockedMission >= 2) {
+      $("mission2Btn").disabled = false;
+      $("mission2Btn").textContent = "🌈 Misi 2 — Cari Huruf";
+      $("mission2Btn").setAttribute("onclick", "selectMission(2)");
+    }
+
+    if (unlockedMission >= 3) {
+      $("mission3Btn").disabled = false;
+      $("mission3Btn").textContent = "🏆 Misi 3 — Cabaran Huruf";
+      $("mission3Btn").setAttribute("onclick", "selectMission(3)");
+    }
+
+    $("missionMessage").textContent =
+      currentMission < 3
+        ? "Tahniah! Misi " + currentMission +
+          " selesai! Misi " + (currentMission + 1) + " telah dibuka! ⭐"
+        : "Tahniah! Kamu telah menamatkan semua 3 misi! 🏆";
 
     mascotSay("Tahniah! Kamu juara! Hebat sekali!", "🐻🏆");
 
