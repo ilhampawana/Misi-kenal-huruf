@@ -344,7 +344,7 @@ async function playSound(correct) {
 
   document.querySelectorAll(".choice").forEach(b => b.disabled = true);
 
-  if (letter === target) {
+  if (letter === correctAnswer) {
     score += 10;
     playSound(true);
     stars += 1;
