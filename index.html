@@ -73,7 +73,25 @@ button:focus-visible{outline:3px solid #7546bb;outline-offset:3px}
     opacity: 1;
   }
 }
+.victory-animation {
+  animation: victory-pop 0.9s ease-out both;
+  transform-origin: center;
+}
 
+@keyframes victory-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 /* Animasi ganjaran bintang */
 @keyframes starReward {
   0% {
