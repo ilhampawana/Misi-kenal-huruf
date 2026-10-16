@@ -464,6 +464,7 @@ async function playVictorySound() {
   if (letter === correctAnswer) {
     score += 10;
     playSound(true);
+    playVictorySound();
     stars += 1;
     button.style.background = "#baf2d7";
     button.style.color = "#185c42";
