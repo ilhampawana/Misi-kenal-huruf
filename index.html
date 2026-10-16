@@ -262,13 +262,15 @@ if (currentMission === 2) {
     $("instruction").textContent =
       "🌈 Huruf sebelum " + target + " ialah huruf apa?";
   }
+
 } else if (currentMission === 3) {
   const index = alphabet.indexOf(target);
   answer = alphabet[(index + 1) % alphabet.length];
 
   $("instruction").textContent =
-    "🏆 Huruf selepas " + target + " ialah huruf apa?";
+    "🧠 Cabaran Ingatan! Ingat huruf tadi, kemudian pilih huruf selepasnya.";
 }
+
 
 correctAnswer = answer;
 
