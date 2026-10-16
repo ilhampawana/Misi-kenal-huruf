@@ -451,8 +451,8 @@ async function playVictorySound() {
       audio.close();
     };
  } catch (error) {
-  alert("Ralat bunyi: " + error.message);
-} 
+  console.log("Bunyi kemenangan tidak dapat dimainkan.");
+}
 }
 
   function checkAnswer(letter, button) {
