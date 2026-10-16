@@ -273,7 +273,13 @@ if (currentMission === 2) {
 correctAnswer = answer;
 
 
-$("target").textContent = target; 
+
+if (currentMission === 3) {
+  $("target").textContent = "🧠";
+} else {
+  $("target").textContent = target;
+}
+
 
   
 let options = [correctAnswer];
