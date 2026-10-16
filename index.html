@@ -450,9 +450,9 @@ async function playVictorySound() {
     oscillator.onended = () => {
       audio.close();
     };
-  } catch (error) {
-    console.log("Bunyi kemenangan tidak dapat dimainkan.");
-  }
+ } catch (error) {
+  alert("Ralat bunyi: " + error.message);
+} 
 }
 
   function checkAnswer(letter, button) {
