@@ -531,7 +531,7 @@ function nextQuestion() {
 
     $("target").textContent = "🏆";
     $("choices").replaceChildren();
-
+    playVictorySound();
     $("feedback").innerHTML =
       '<div class="victory-box victory-animation">' +
       '<div class="victory-stars">⭐⭐⭐</div>' +
