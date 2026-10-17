@@ -356,7 +356,8 @@ function newQuestion() {
     $("instruction").textContent =
       "🧠 Ingat huruf tadi! Huruf apakah yang datang selepasnya?";
   }
-
+  speakInstruction($("instruction").textContent);
+  
   correctAnswer = answer;
 
   $("target").textContent = target;
