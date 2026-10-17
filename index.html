@@ -280,7 +280,7 @@ function speakLetter(letter) {
   speech.rate = 0.75;
   window.speechSynthesis.speak(speech);
 }
-
+console.log("Arahan suara dimainkan:", message);
 function speakInstruction(message) {
   if (!("speechSynthesis" in window)) return;
 
