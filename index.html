@@ -535,8 +535,6 @@ reward.innerHTML = '<span class="star-reward">⭐ +1 BINTANG!</span>';
 function nextQuestion() {
   alert("Butang soalan seterusnya ditekan!");
 
-  
-
 
   
   if (round >= 10) {
@@ -589,9 +587,10 @@ function nextQuestion() {
   }
 
 
-  round++;
-alert("Bergerak ke soalan baharu!");
-newQuestion();
+ alert("Sebelum nombor soalan berubah");
+round = round + 1;
+alert("Nombor soalan sekarang: " + round);
+newQuestion(); 
 }
 
 function restartGame() {
