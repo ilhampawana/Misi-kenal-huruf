@@ -532,8 +532,10 @@ reward.innerHTML = '<span class="star-reward">⭐ +1 BINTANG!</span>';
 }
 
 
+
+
 function nextQuestion() {
-  alert("Butang soalan seterusnya ditekan!");
+  if (!answered || finished) return;
 
 
   
@@ -587,11 +589,11 @@ function nextQuestion() {
   }
 
 
- alert("Sebelum nombor soalan berubah");
+ 
 round = round + 1;
-alert("Nombor soalan sekarang: " + round);
-newQuestion(); 
+newQuestion();
 }
+
 
 function restartGame() {
   score = 0;
