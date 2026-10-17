@@ -217,7 +217,7 @@ Hai kawan! Jom belajar huruf! 🌈
   <div style="margin-top:15px">
     <button class="main-btn" id="nextBtn" hidden>Soalan seterusnya ➜</button>
     <button class="main-btn" id="restartBtn" hidden onclick="location.reload()">🔄 Main Semula</button>
-    <button class="main-btn reset-btn" id="restartBtn">🔄 Main semula</button>
+    <button class="main-btn reset-btn" id="resetBtn">🔄 Main semula</button>
   </div>
 </main>
 
@@ -618,7 +618,7 @@ refreshMissionMenu();
 
 $("hearBtn").addEventListener("click", () => speakLetter(target));
 $("nextBtn").addEventListener("click", nextQuestion);
-$("restartBtn").addEventListener("click", restartGame);
+$("resetBtn").addEventListener("click", restartGame);
 
 restartGame();
 </script>
